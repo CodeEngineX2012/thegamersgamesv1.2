@@ -6,7 +6,7 @@
 
 - **Frontend:** HTML, CSS  
 - **Backend:** JavaScript
-- **Hosting:** GitHub Pages codeenginex2012.github.io/thegamersgamesv1.2 / infinity free thegamersgamesv12.42web.io 
+- **Hosting:** GitHub Pages **codeenginex2012.github.io/thegamersgamesv1.2** / infinity free **thegamersgamesv12.42web.io**
 
 ## 🔗 FoIIow us
 
