@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="Logo- game web.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Code | Reset Password</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: gray;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+[type="text"],
+[type="email"],
+[type="password"] {
+    padding: 15px;
+}
+    .navbar {
+        background-color: #333;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px;
+    }
+
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .navbar ul li {
+        float: left;
+    }
+
+    .navbar ul li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+    }
+
+    .navbar ul li a:hover {
+padding: 30px;
+background-color: #555;
+}
+
+    .navbar button {
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 14px 20px;
+        cursor: pointer;
+    }
+
+    .navbar button a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .navbar button:hover {
+        background-color: #555;
+        padding: 30px;
+    }
+    p{
+        color: black;
+        font-size: 25px;
+        font-weight: bolder;
+    }
+</style>
+</head>
+<body>
+<nav class="navbar">
+    <ul>
+      <li><a href="index.html">The Gamers Games</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gamespage.html">All Games</a></li>
+      <li><a href="quizandpuzzlegames.html">Quiz and Puzzle Games</a></li>
+      <li><a href="aboutpage.html">About</a></li>
+      <li><a href="signupform.html">Sign Up Form</a></li>
+      <li><a href="retromusic.html">Retro Music</a></li>
+    </ul>
+    <span id="user-info"></span>
+  </nav>
+  <br> 
+  <br>
+  <br>
+  <br> <br>
+  <br> <br>
+  <br>
+    <h2>Input The Verification Code To Reset Your Password.</h2>
+    <div class="container">
+        <p>Enter Code Here:</p>
+        <input type="text" id="code-input" placeholder="Enter Code" required>
+        <button id="reset-btn">Reset Password</button>
+        <div id="response-message"></div>
+      </div>
+<br>
+<br>
+ <br>  <br>  <br>  <br>  
+    <script>   
+        const allowedCodes = ['112233', '114455', '9012']; // list of allowed codes
+    const codeInput = document.getElementById('code-input');
+    const resetBtn = document.getElementById('reset-btn');
+    const responseMessageDiv = document.getElementById('response-message');
+
+    resetBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const enteredCode = codeInput.value.trim();
+      if (allowedCodes.includes(enteredCode)) {
+        responseMessageDiv.innerHTML = 'Access Granted! Redirecting...';
+        // Delay redirection by 2 seconds
+        setTimeout(() => {
+          window.location.href = 'resetpassword.html'; // replace with your desired URL
+        }, 2000); // 2000ms = 2 seconds
+      } else {
+        responseMessageDiv.innerHTML = 'Access Denied! Invalid code.';
+      }
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const username = localStorage.getItem('username');
+        const avatarURL = localStorage.getItem('avatar');
+        const userInfo = document.getElementById('user-info');
+  
+        if (username) {
+          userInfo.innerHTML = `
+            <div class="user-info" onclick="toggleDropdown()">
+              ${avatarURL ? `<img src="${avatarURL}" class="avatar" alt="Avatar">` : ''}
+              <span>${username}</span>
+              <div class="dropdown" id="dropdown-menu">
+                <a href="#" onclick="logout()">Sign Out</a>
+                <a href="loginpage.html">Add Another User</a>
+              </div>
+            </div>
+          `;
+        } else {
+          userInfo.innerHTML = `<button><a href="loginpage.html">Login/Sign Up</a></button>`;
+        }
+  
+        // Set up the audio player state
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+          audio.addEventListener('play', () => {
+            localStorage.setItem('audioSrc', audio.src);
+            localStorage.setItem('audioCurrentTime', audio.currentTime);
+          });
+        });
+  
+        // Restore audio state
+        const savedAudioSrc = localStorage.getItem('audioSrc');
+        const savedAudioCurrentTime = localStorage.getItem('audioCurrentTime');
+        if (savedAudioSrc) {
+          audioElements.forEach(audio => {
+            if (audio.src === savedAudioSrc) {
+              audio.currentTime = savedAudioCurrentTime;
+              audio.play();
+            }
+          });
+        }
+      });
+  
+      function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown-menu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      }
+  
+      function logout() {
+        localStorage.removeItem('username');
+        localStorage.removeItem('avatar');
+        localStorage.removeItem('audioSrc');
+        localStorage.removeItem('audioCurrentTime');
+        window.location.href = 'loginpage.html';
+      }
+  
+      window.onclick = function(event) {
+        if (!event.target.matches('.user-info')) {
+          const dropdown = document.getElementById('dropdown-menu');
+          if (dropdown.style.display === 'block') {
+            dropdown.style.display = 'none';
+          }
+        }
+      }
+</script>
+</body>
+</html>
